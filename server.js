@@ -4,9 +4,9 @@
 var path = require('path');
 var express = require('./express');
 // 引入第三方请求主体格式化工具
-var bodyParser = require('./third/body-parser');
+var bodyParser = require('./thirdMiddleware/body-parser');
 // 引入第三方模版引擎
-var ntl = require('./third/ntl');
+var ntl = require('./thirdMiddleware/ntl');
 // 启动express
 var app = express();
 
