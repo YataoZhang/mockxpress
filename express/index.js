@@ -5,7 +5,7 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var path = require('path');
-var makeResponse = require('./res');
+var response = require('./response');
 /**
  * main method
  * @return {app}
@@ -31,7 +31,7 @@ function express() {
         req.hostname = req.headers['host'].split(':')[0];
 
         // 封装response
-        makeResponse(res, engine);
+        response(res, engine);
 
 
         var index = 0;
