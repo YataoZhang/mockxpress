@@ -34,6 +34,15 @@ app.use('/water', function (req, res, next) {
     console.log('过滤沙子');
     next();
 });
+
+// post方法,接受post时使用bodyParser
+app.use('/post', bodyParser);
+
+// 错误中间件
+app.use(function (err, req, res, next) {
+    res.send(err);
+});
+
 app.get('/water/:id/:name/home/:age', function (req, res) {
     console.log(req.params);
     // res.send(req.query);
@@ -45,7 +54,11 @@ app.get('/water/:id/:name/home/:age', function (req, res) {
 
 // 模版请求地址
 app.get('/template/:id', function (req, res) {
-    res.render('index', {title: 'ntl title', content: 'hello express view engine', id: req.params.id});
+    res.render('index', {
+        title: 'ntl title',
+        content: 'hello express view engine',
+        id: req.params.id
+    });
 });
 
 // http get方法 ,路径为/get
@@ -53,8 +66,6 @@ app.get('/get', function (req, res) {
     res.send('hello');
 });
 
-// post方法,接受post时使用bodyParser
-app.use('/post', bodyParser);
 app.post('/post', function (req, res) {
     console.log(req.body);
     res.send('this is post method');
@@ -73,10 +84,6 @@ app.get('*', function (req, res) {
     res.send('note find match path');
 });
 
-// 错误中间件
-app.use(function (err, req, res, next) {
-    res.send(err);
-});
 
 // 监听端口
 app.listen(3000);
