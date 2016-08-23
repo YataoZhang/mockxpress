@@ -6,17 +6,14 @@ var url = require('url');
 var fs = require('fs');
 var path = require('path');
 var response = require('./response');
+var request = require('./request');
+
 /**
  * main method
  * @return {app}
  */
 function express() {
-    // 模版引擎配置
-    var engine = {
-        viewEngineList: {},
-        viewsPath: '',
-        viewType: ''
-    };
+    
     /**
      * core
      * @param req
@@ -30,12 +27,10 @@ function express() {
         req.query = urlObj.query;
         req.hostname = req.headers['host'].split(':')[0];
 
-        // 封装response
-        response(res, engine);
-
+        req.__proto__ = __request;
+        res.__proto__ = __response;
 
         var index = 0;
-        // console.log(app.routes);
         /**
          * 依次处理中间件
          * @param err 错误信息
@@ -43,6 +38,7 @@ function express() {
         function next(err) {
             if (index >= app.routes.length) {
                 res.end(`__CANNOT ${method} ${pathname}`);
+                return;
             }
             var route = app.routes[index++];
             // console.log(route.fn.toString());
@@ -92,6 +88,18 @@ function express() {
         // 往浏览器返回文件是移步的,所以这里必须注释掉
         // res.end(`.  CANNOT ${method} ${pathname}`);
     };
+    
+    
+    // 模版引擎配置
+    var engine = app.engineOptions = {
+        viewEngineList: {},
+        viewsPath: '',
+        viewType: ''
+    };
+
+    var __request = {__proto__: request, app: app};
+    var __response = {__proto__: response, app: app};
+    
     // add listen method
     app.listen = function (port) {
         http.createServer(app).listen(port);

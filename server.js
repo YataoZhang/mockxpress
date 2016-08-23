@@ -26,12 +26,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 设置中间件
 app.use(function (req, res, next) {
-    console.log('过滤石头');
+    console.log('[LOG] 过滤石头');
     // next('stone is too big');
     next();
 });
 app.use('/water', function (req, res, next) {
-    console.log('过滤沙子');
+    console.log('[LOG] 过滤沙子');
     next();
 });
 
@@ -40,11 +40,13 @@ app.use('/post', bodyParser);
 
 // 错误中间件
 app.use(function (err, req, res, next) {
-    res.send(err);
+    console.log('[LOG] err use');
+    // res.send(err);
+    next();
 });
 
 app.get('/water/:id/:name/home/:age', function (req, res) {
-    console.log(req.params);
+    console.log('[LOG] ',req.params);
     // res.send(req.query);
     res.send(400);
     // res.write(JSON.stringify(req.query));
@@ -54,6 +56,7 @@ app.get('/water/:id/:name/home/:age', function (req, res) {
 
 // 模版请求地址
 app.get('/template/:id', function (req, res) {
+    console.log('[LOG] ',req.header('cookie'));
     res.render('index', {
         title: 'ntl title',
         content: 'hello express view engine',
@@ -67,7 +70,7 @@ app.get('/get', function (req, res) {
 });
 
 app.post('/post', function (req, res) {
-    console.log(req.body);
+    console.log('[LOG] ',req.body);
     res.send('this is post method');
 });
 
