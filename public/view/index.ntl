@@ -5,7 +5,7 @@
     <title><%= title %></title>
 </head>
 <body>
-<div><%= content %></div>
-<div>id:<%= id %></div>
+<div><strong><%= content %></strong></div>
+<div><strong>input id:<%= id %></strong></div>
 </body>
 </html>
