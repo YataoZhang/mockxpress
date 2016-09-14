@@ -36,7 +36,7 @@ app.use('/water', function (req, res, next) {
 });
 
 // post方法,接受post时使用bodyParser
-app.use('/post', bodyParser);
+app.use('/post', bodyParser());
 
 // 错误中间件
 app.use(function (err, req, res, next) {
